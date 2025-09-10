@@ -1,0 +1,39 @@
+version: 2
+
+models:
+  - name: cleaning_data
+    description: "Clean NYC taxi trips with calculated duration and data quality checks"
+    columns:
+      - name: trip_id
+        description: "Unique identifier for each trip"
+        data_type: int
+        constraints:
+          - type: not_null
+          - type: unique
+        test:
+          - not_null
+          - unique
+          
+      - name: pickup_datetime
+        description: "When the trip started"
+        data_type: timestamp_ntz
+        constraints:
+          - type: not_null
+
+      - name: dropoff_datetime
+        description: "When the trip ended"  
+        data_type: timestamp_ntz
+        constraints:
+          - type: not_null
+
+      - name: fare_amount
+        description: "Trip fare amount (cleaned to remove negatives)"
+        data_type: decimal(10,2)
+        test:
+          - not_null
+          - assert_non_negative_fares
+
+
+      - name: trip_duration_in_minutes
+        description: "Trip duration calculated in minutes"
+        data_type: bigint

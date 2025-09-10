@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: nyc_taxi
+    catalog: samples      # explicitly use Unity Catalog
+    schema: nyc
+    tables:
+      - name: trips
